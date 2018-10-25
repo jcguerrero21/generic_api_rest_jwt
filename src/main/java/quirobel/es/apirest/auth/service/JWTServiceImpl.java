@@ -18,14 +18,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
+import static quirobel.es.apirest.auth.SecurityConstans.EXPIRATION_TIME;
+import static quirobel.es.apirest.auth.SecurityConstans.TOKEN_PREFIX;
+
 @Component
 public class JWTServiceImpl implements JWTService {
 
 	public static final String SECRET = Base64Utils.encodeToString("Alguna.Clave.Secreta.123456".getBytes());
-	
-	public static final long EXPIRATION_DATE = 14000000L;
-	public static final String TOKEN_PREFIX = "Bearer ";
-	public static final String HEADER_STRING = "Authorization";
 	
 	@Override
 	public String create(Authentication auth) throws IOException {
@@ -39,7 +38,7 @@ public class JWTServiceImpl implements JWTService {
 
 		String token = Jwts.builder().setClaims(claims).setSubject(username)
 				.signWith(SignatureAlgorithm.HS512, SECRET.getBytes()).setIssuedAt(new Date())
-				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_DATE)).compact();
+				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).compact();
 
 		return token;
 	}
@@ -67,8 +66,8 @@ public class JWTServiceImpl implements JWTService {
 
 	@Override
 	public String getUsername(String token) {
-		// TODO Auto-generated method stub
-		return getClaims(token).getSubject();
+		String a = getClaims(token).getSubject();
+		return a;
 	}
 
 	@Override

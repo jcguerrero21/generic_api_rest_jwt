@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static quirobel.es.apirest.auth.SecurityConstans.HEADER_STRING;
+import static quirobel.es.apirest.auth.SecurityConstans.TOKEN_PREFIX;
+
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -23,11 +26,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		this.jwtService = jwtService;
 	}
 
-	@Override
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
+        super(authenticationManager);
+    }
+
+    @Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		String header = request.getHeader(JWTServiceImpl.HEADER_STRING);
+		String header = request.getHeader(HEADER_STRING);
 
 		if (!requiresAuthentication(header)) {
 			chain.doFilter(request, response);
@@ -47,7 +54,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 	protected boolean requiresAuthentication(String header) {
 
-		if (header == null || !header.startsWith(JWTServiceImpl.TOKEN_PREFIX)) {
+		if (header == null || !header.startsWith(TOKEN_PREFIX)) {
 			return false;
 		}
 		return true;

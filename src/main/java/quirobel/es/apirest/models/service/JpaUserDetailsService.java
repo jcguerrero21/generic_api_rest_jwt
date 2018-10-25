@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import quirobel.es.apirest.models.entity.Role;
-import quirobel.es.apirest.models.entity.Usuario;
+import quirobel.es.apirest.models.entity.UsuarioRol;
 import quirobel.es.apirest.models.dao.IUsuarioDao;
 
 import java.util.ArrayList;
@@ -30,26 +30,26 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Usuario usuario = usuarioDao.findByUsername(username);
+        UsuarioRol usuarioRol = usuarioDao.findByUsername(username);
 
-        if (usuario == null) {
-            logger.error("Error en el Login: no existe el usuario '" + username + "' en el sistema!");
+        if (usuarioRol == null) {
+            logger.error("Error en el Login: no existe el usuarioRol '" + username + "' en el sistema!");
             throw new UsernameNotFoundException("Username: " + username + " no existe en el sistema!");
         }
 
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-        for (Role role : usuario.getRoles()) {
+        for (Role role : usuarioRol.getRoles()) {
             logger.info("Role: ".concat(role.getAuthority()));
             authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
         }
 
         if (authorities.isEmpty()) {
-            logger.error("Error en el Login: Usuario '" + username + "' no tiene roles asignados!");
-            throw new UsernameNotFoundException("Error en el Login: usuario '" + username + "' no tiene roles asignados!");
+            logger.error("Error en el Login: UsuarioRol '" + username + "' no tiene roles asignados!");
+            throw new UsernameNotFoundException("Error en el Login: usuarioRol '" + username + "' no tiene roles asignados!");
         }
 
-        return new User(usuario.getUsername(), usuario.getPassword(), usuario.getActivo(), true, true, true, authorities);
+        return new User(usuarioRol.getUsername(), usuarioRol.getPassword(), usuarioRol.getEnabled(), true, true, true, authorities);
     }
 }
 

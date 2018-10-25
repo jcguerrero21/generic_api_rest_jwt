@@ -15,19 +15,6 @@ import java.util.Locale;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-    /*	private final Logger log = LoggerFactory.getLogger(getClass());
-
-	Este  método sería si queremos guardar el archivo en una misma carpeta dentro del proyecto
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		super.addResourceHandlers(registry);
-
-		String resourcePath = Paths.get("uploads").toAbsolutePath().toUri().toString();
-		log.info(resourcePath);
-
-		registry.addResourceHandler("/uploads/**").addResourceLocations(resourcePath);
-	}*/
-
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/error_403").setViewName("error_403");
     }

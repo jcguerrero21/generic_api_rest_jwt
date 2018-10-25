@@ -5,23 +5,23 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario implements Serializable {
+@Table(name = "users")
+public class UsuarioRol implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 25, unique = true)
+    @Column(length = 30, unique = true)
     private String username;
 
-    @Column
+    @Column(length = 60)
     private String password;
 
-    private Boolean activo;
+    private Boolean enabled;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "user_id")
     private List<Role> roles;
 
     public Long getId() {
@@ -48,12 +48,12 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public Boolean getActivo() {
-        return activo;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<Role> getRoles() {

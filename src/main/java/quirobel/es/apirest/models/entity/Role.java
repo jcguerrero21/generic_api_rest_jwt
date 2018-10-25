@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="authorities", uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "authority"})})
+@Table(name="authorities", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "authority"})})
 public class Role implements Serializable {
 
     @Id
@@ -17,15 +17,17 @@ public class Role implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public Role setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getAuthority() {
         return authority;
     }
 
-    public void setAuthority(String authority) {
+    public Role setAuthority(String authority) {
         this.authority = authority;
+        return this;
     }
 }

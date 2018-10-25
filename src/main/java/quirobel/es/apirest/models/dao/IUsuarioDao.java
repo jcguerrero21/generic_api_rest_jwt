@@ -1,10 +1,10 @@
 package quirobel.es.apirest.models.dao;
 
 import org.springframework.data.repository.CrudRepository;
-import quirobel.es.apirest.models.entity.Usuario;
+import quirobel.es.apirest.models.entity.UsuarioRol;
 
-public interface IUsuarioDao extends CrudRepository<Usuario, Long> {
+public interface IUsuarioDao extends CrudRepository<UsuarioRol, Long> {
 
-    Usuario findByUsername(String username);
+    UsuarioRol findByUsername(String username);
 
 }
